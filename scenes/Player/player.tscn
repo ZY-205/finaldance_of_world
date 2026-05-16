@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://barbikb5ucyyc"]
+
+[ext_resource type="Script" uid="uid://l1dya5v37blp" path="res://scenes/Player/player.gd" id="1_cyojo"]
+[ext_resource type="PackedScene" uid="uid://cbwmihkgpvll4" path="res://scenes/Player/control.tscn" id="2_1kbk7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kk62l"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_1kbk7"]
+length = 3.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1kbk7"]
+size = Vector3(0.001, 0.001, 22.956055)
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 15
+script = ExtResource("1_cyojo")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+radial_segments = 20
+rings = 20
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_kk62l")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2.5, -0.7)
+shape = SubResource("SeparationRayShape3D_1kbk7")
+debug_color = Color(0, 0.63529414, 0.42352942, 1)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0, 2)
+
+[node name="RayCast3D" type="RayCast3D" parent="SpringArm3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0.21584305, -2.1818979)
+target_position = Vector3(0, -30.385, 0)
+collision_mask = 3
+
+[node name="Area3D" type="Area3D" parent="SpringArm3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SpringArm3D/Camera3D/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0183855, 0.44775483, -11.7024975)
+shape = SubResource("BoxShape3D_1kbk7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SpringArm3D/Camera3D"]
+
+[node name="Control" parent="SpringArm3D/Camera3D/CanvasLayer" instance=ExtResource("2_1kbk7")]
+z_index = 5

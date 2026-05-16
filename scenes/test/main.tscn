@@ -1,0 +1,228 @@
+[gd_scene load_steps=23 format=3 uid="uid://bcqw4h0hlg12h"]
+
+[ext_resource type="PackedScene" uid="uid://b3uv4b88cktrl" path="res://scenes/test/enemy.tscn" id="1_7p1hh"]
+[ext_resource type="Script" uid="uid://pc5grwf83rpl" path="res://scenes/test/main.gd" id="1_ae60x"]
+[ext_resource type="PackedScene" uid="uid://barbikb5ucyyc" path="res://scenes/Player/player.tscn" id="1_wwlvk"]
+[ext_resource type="Script" uid="uid://cba2ssvq2rc7s" path="res://scenes/test/is_deploy.gd" id="2_7p1hh"]
+[ext_resource type="Script" uid="uid://egg1es2nqi8d" path="res://scenes/test/trees.gd" id="4_dxjet"]
+[ext_resource type="Texture2D" uid="uid://crkuurcwrjvk8" path="res://assets/game/characters/palyer_all.png" id="5_6eh6t"]
+[ext_resource type="FontFile" uid="uid://dpjl3y11y7all" path="res://assets/ui/fonts/WenQuanYi Bitmap Song 12px.ttf" id="6_yvr0t"]
+[ext_resource type="Script" uid="uid://fxcbq4prxqyd" path="res://scenes/test/control.gd" id="8_yvr0t"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lmefh"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_wwlvk"]
+sky_material = SubResource("ProceduralSkyMaterial_lmefh")
+
+[sub_resource type="Environment" id="Environment_7p1hh"]
+background_mode = 2
+sky = SubResource("Sky_wwlvk")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ae60x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ae60x"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmefh"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lmefh"]
+top_radius = 5.0
+bottom_radius = 15.0
+height = 50.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wwlvk"]
+height = 6.0
+radius = 15.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_wwlvk"]
+size = Vector3(4.815, 7.425, 5.545)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wwlvk"]
+size = Vector3(4.815, 7.425, 5.545)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_o0ihb"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o0ihb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bteet"]
+atlas = ExtResource("5_6eh6t")
+region = Rect2(240, 800, 80, 80)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6eh6t"]
+height = 2.4648438
+radius = 2.166504
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_ae60x")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7p1hh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="floor" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+collision_layer = 2
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_ae60x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_ae60x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+mesh = SubResource("BoxMesh_lmefh")
+
+[node name="tower" type="Node3D" parent="." groups=["main_tower"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.788208, 0)
+mesh = SubResource("CylinderMesh_lmefh")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="tower"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0908661, 0)
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tower/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9396648, 0)
+shape = SubResource("CylinderShape3D_wwlvk")
+
+[node name="birth" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.217014, 3.6745567, 41.917175)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="birth"]
+mesh = SubResource("BoxMesh_wwlvk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="birth"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="birth/StaticBody3D"]
+shape = SubResource("BoxShape3D_wwlvk")
+
+[node name="enemy" parent="." instance=ExtResource("1_7p1hh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.914045, 0.5500002, -24.666323)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 96.35231, 0)
+
+[node name="is_deploy" type="Node3D" parent="."]
+script = ExtResource("2_7p1hh")
+
+[node name="trees" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9373194, -44.988045)
+script = ExtResource("4_dxjet")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="trees"]
+mesh = SubResource("CylinderMesh_o0ihb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="trees"]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trees/StaticBody3D"]
+shape = SubResource("CylinderShape3D_o0ihb")
+
+[node name="interactive" type="Node3D" parent="trees"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5215634, 0)
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="trees/interactive"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+billboard = 2
+texture = SubResource("AtlasTexture_bteet")
+
+[node name="Label3D" type="Label3D" parent="trees/interactive"]
+billboard = 2
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "E"
+font = ExtResource("6_yvr0t")
+font_size = 100
+outline_size = 20
+
+[node name="Area3D" type="Area3D" parent="trees"]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trees/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23242188, 0)
+shape = SubResource("CylinderShape3D_6eh6t")
+debug_color = Color(0.692716, 0.48869252, 0.2547588, 0.41960785)
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_wwlvk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.88355, 0.54999924, 13.206467)
+
+[node name="Camera3D" parent="Player/SpringArm3D" index="0"]
+current = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_yvr0t")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Control"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -100.0
+offset_right = 152.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_yvr0t")
+theme_override_font_sizes/font_size = 40
+text = "木头:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel2" type="Panel" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_yvr0t")
+theme_override_font_sizes/font_size = 40
+text = "矿物:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_shape_entered" from="trees/Area3D" to="trees" method="_on_area_3d_body_shape_entered"]
+[connection signal="body_shape_exited" from="trees/Area3D" to="trees" method="_on_area_3d_body_shape_exited"]
+
+[editable path="Player"]

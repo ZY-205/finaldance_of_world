@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3uv4b88cktrl"]
+
+[ext_resource type="Script" uid="uid://xoufwa7jrd6j" path="res://scenes/test/enemy.gd" id="1_50ix2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ttx5n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_50ix2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50ix2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qmoxr"]
+size = Vector3(1.2277832, 0.80566406, 0.293396)
+
+[node name="enemy" type="RigidBody3D"]
+collision_layer = 4
+collision_mask = 15
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+physics_material_override = SubResource("PhysicsMaterial_ttx5n")
+script = ExtResource("1_50ix2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_50ix2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_50ix2")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7348769, 0)
+billboard = 2
+text = "敌人"
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0009598732, 0.09716797, 0.353302)
+shape = SubResource("BoxShape3D_qmoxr")
+debug_color = Color(1, 0, 0.13725491, 1)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

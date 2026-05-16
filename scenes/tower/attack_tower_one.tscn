@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://bualqsqd1koig"]
+
+[ext_resource type="Script" uid="uid://dcus8t6wjjdw4" path="res://scenes/tower/attack_tower_one.gd" id="1_o7juw"]
+[ext_resource type="ArrayMesh" uid="uid://bycc8ygdegcjd" path="res://assets/3D/tower/attack_tower_two.obj" id="2_5pnbb"]
+[ext_resource type="Script" uid="uid://clfpnfyjsxsrd" path="res://scenes/tower/attack_range.gd" id="2_osi5s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_osi5s"]
+size = Vector3(1.1, 1.8, 1.1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aljkj"]
+resource_local_to_scene = true
+radius = 10.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o7juw"]
+radius = 2.0
+
+[node name="attack_tower_one" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0, -0.55)
+script = ExtResource("1_o7juw")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, -0.15)
+mesh = ExtResource("2_5pnbb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.002746582, 0.8990051, 0.0057373047)
+shape = SubResource("BoxShape3D_osi5s")
+
+[node name="attack_range" type="Node3D" parent="."]
+script = ExtResource("2_osi5s")
+
+[node name="attack_range" type="Area3D" parent="attack_range"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attack_range/attack_range"]
+shape = SubResource("SphereShape3D_aljkj")
+debug_color = Color(0.9988249, 0, 0.14389002, 0.41960785)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.669083, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_o7juw")
+debug_color = Color(0.6203814, 0.38011587, 0.949516, 0.41960785)
+
+[connection signal="body_entered" from="attack_range/attack_range" to="." method="_on_attack_range_body_entered"]
+[connection signal="body_exited" from="attack_range/attack_range" to="." method="_on_attack_range_body_exited"]
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

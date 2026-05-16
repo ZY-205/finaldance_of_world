@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1qc4atnk75ei"]
+
+[ext_resource type="Shape3D" uid="uid://ekm6esa25kdg" path="res://scenes/Player/attack_range.tres" id="1_krhlx"]
+
+[node name="attack_range" type="Node3D"]
+
+[node name="attack_range" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="attack_range"]
+shape = ExtResource("1_krhlx")
+debug_color = Color(0.9988249, 0, 0.14389002, 0.41960785)

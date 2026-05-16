@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://buv8cs5ph7m2m"]
+
+[ext_resource type="Script" uid="uid://c16xolgvbulam" path="res://scenes/tower/parabolic.gd" id="1_acu4v"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xhjgj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_acu4v"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fli7r"]
+radius = 0.52
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ajkmm"]
+radius = 0.7
+
+[node name="parabolic" type="RigidBody3D"]
+collision_mask = 6
+script = ExtResource("1_acu4v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_xhjgj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_acu4v")
+debug_color = Color(0.60651547, 0.5410251, 0, 0.41960785)
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_fli7r")
+
+[node name="Area3D2" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+shape = SubResource("SphereShape3D_ajkmm")
+debug_color = Color(0.7704866, 0.44510525, 0, 0.41960785)
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]
+[connection signal="body_entered" from="Area3D2" to="." method="_on_area_3d_2_body_entered"]
